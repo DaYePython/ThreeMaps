@@ -3,14 +3,19 @@
     <!-- 地图 -->
     <mapScene ref="mapSceneRef"></mapScene>
     <div class="large-screen-wrap" id="large-screen">
-      <m-header title="广东省数据可视化平台" sub-text="Guangdong Economic Visualization Platform">
+      <m-header
+        title="江西省数据可视化平台"
+        sub-text="Jiangxi Economic Visualization Platform"
+      >
         <!--左侧 天气 -->
         <template v-slot:left>
           <div class="m-header-weather"><span>小雨</span><span>27℃</span></div>
         </template>
         <!--右侧 日期 -->
         <template v-slot:right>
-          <div class="m-header-date"><span>2023-10-12</span><span>17:53:16</span></div></template
+          <div class="m-header-date">
+            <span>2023-10-12</span><span>17:53:16</span>
+          </div></template
         >
       </m-header>
       <!-- 顶部菜单 -->
@@ -27,7 +32,11 @@
       </div>
       <!-- 顶部统计卡片 -->
       <div class="top-count-card">
-        <mCountCard v-for="(item, index) in state.totalView" :info="item" :key="index"></mCountCard>
+        <mCountCard
+          v-for="(item, index) in state.totalView"
+          :info="item"
+          :key="index"
+        ></mCountCard>
       </div>
       <!-- 左边布局 图表 -->
       <div class="left-wrap">
@@ -124,30 +133,30 @@
   </div>
 </template>
 <script setup>
-import { shallowRef, ref, reactive, onMounted, onBeforeUnmount } from "vue"
-import mapScene from "./map.vue"
-import mHeader from "@/components/mHeader/index.vue"
-import mCountCard from "@/components/mCountCard/index.vue"
-import mMenu from "@/components/mMenu/index.vue"
-import mRadar from "@/components/mRadar/index.vue"
-import mMenuItem from "@/components/mMenuItem/index.vue"
-import mSvglineAnimation from "@/components/mSvglineAnimation/index.vue"
-import BulkCommoditySalesChart from "./components/BulkCommoditySalesChart.vue"
-import YearlyEconomyTrend from "./components/YearlyEconomyTrend.vue"
-import EconomicTrendChart from "./components/EconomicTrendChart.vue"
-import DistrictEconomicIncome from "./components/DistrictEconomicIncome.vue"
-import PurposeSpecialFunds from "./components/PurposeSpecialFunds.vue"
-import ProportionPopulationConsumption from "./components/ProportionPopulationConsumption.vue"
-import ElectricityUsage from "./components/ElectricityUsage.vue"
-import QuarterlyGrowthSituation from "./components/QuarterlyGrowthSituation.vue"
+import { shallowRef, ref, reactive, onMounted, onBeforeUnmount } from "vue";
+import mapScene from "./map.vue";
+import mHeader from "@/components/mHeader/index.vue";
+import mCountCard from "@/components/mCountCard/index.vue";
+import mMenu from "@/components/mMenu/index.vue";
+import mRadar from "@/components/mRadar/index.vue";
+import mMenuItem from "@/components/mMenuItem/index.vue";
+import mSvglineAnimation from "@/components/mSvglineAnimation/index.vue";
+import BulkCommoditySalesChart from "./components/BulkCommoditySalesChart.vue";
+import YearlyEconomyTrend from "./components/YearlyEconomyTrend.vue";
+import EconomicTrendChart from "./components/EconomicTrendChart.vue";
+import DistrictEconomicIncome from "./components/DistrictEconomicIncome.vue";
+import PurposeSpecialFunds from "./components/PurposeSpecialFunds.vue";
+import ProportionPopulationConsumption from "./components/ProportionPopulationConsumption.vue";
+import ElectricityUsage from "./components/ElectricityUsage.vue";
+import QuarterlyGrowthSituation from "./components/QuarterlyGrowthSituation.vue";
 
-import { Assets } from "./assets.js"
-import emitter from "@/utils/emitter"
-import gsap from "gsap"
-import autofit from "autofit.js"
+import { Assets } from "./assets.js";
+import emitter from "@/utils/emitter";
+import gsap from "gsap";
+import autofit from "autofit.js";
 
-const assets = shallowRef(null)
-const mapSceneRef = ref(null)
+const assets = shallowRef(null);
+const mapSceneRef = ref(null);
 const state = reactive({
   // 进度
   progress: 0,
@@ -170,93 +179,105 @@ const state = reactive({
       unit: "万人",
     },
   ],
-})
+});
 onMounted(() => {
   // 监听地图播放完成，执行事件
-  emitter.$on("mapPlayComplete", handleMapPlayComplete)
+  emitter.$on("mapPlayComplete", handleMapPlayComplete);
   // 自动适配
   assets.value = autofit.init({
     dh: 1080,
     dw: 1920,
     el: "#large-screen",
     resize: true,
-  })
+  });
   // 初始化资源
   initAssets(async () => {
     // 加载地图
-    emitter.$emit("loadMap", assets.value)
+    emitter.$emit("loadMap", assets.value);
     // 隐藏loading
-    await hideLoading()
+    await hideLoading();
     // 播放场景
-    mapSceneRef.value.play()
-  })
-})
+    mapSceneRef.value.play();
+  });
+});
 onBeforeUnmount(() => {
-  emitter.$off("mapPlayComplete", handleMapPlayComplete)
-})
+  emitter.$off("mapPlayComplete", handleMapPlayComplete);
+});
 // 初始化加载资源
 function initAssets(onLoadCallback) {
-  assets.value = new Assets()
+  assets.value = new Assets();
   // 资源加载进度
   let params = {
     progress: 0,
-  }
+  };
   assets.value.instance.on("onProgress", (path, itemsLoaded, itemsTotal) => {
-    let p = Math.floor((itemsLoaded / itemsTotal) * 100)
+    let p = Math.floor((itemsLoaded / itemsTotal) * 100);
     gsap.to(params, {
       progress: p,
       onUpdate: () => {
-        state.progress = Math.floor(params.progress)
+        state.progress = Math.floor(params.progress);
       },
-    })
-  })
+    });
+  });
   // 资源加载完成
   assets.value.instance.on("onLoad", () => {
-    onLoadCallback && onLoadCallback()
-  })
+    onLoadCallback && onLoadCallback();
+  });
 }
 
 // 隐藏loading
 async function hideLoading() {
   return new Promise((resolve, reject) => {
-    let tl = gsap.timeline()
+    let tl = gsap.timeline();
     tl.to(".loading-text span", {
       y: "200%",
       opacity: 0,
       ease: "power4.inOut",
       duration: 2,
       stagger: 0.2,
-    })
-    tl.to(".loading-progress", { opacity: 0, ease: "power4.inOut", duration: 2 }, "<")
+    });
+    tl.to(
+      ".loading-progress",
+      { opacity: 0, ease: "power4.inOut", duration: 2 },
+      "<",
+    );
     tl.to(
       ".loading",
       {
         opacity: 0,
         ease: "power4.inOut",
         onComplete: () => {
-          resolve()
+          resolve();
         },
       },
-      "-=1"
-    )
-  })
+      "-=1",
+    );
+  });
 }
 
 function handleMenuSelect(index) {
-  state.activeIndex = index
+  state.activeIndex = index;
 }
 // 地图开始动画播放完成
 function handleMapPlayComplete() {
-  let tl = gsap.timeline({ paused: false })
-  let leftCards = gsap.utils.toArray(".left-card")
-  let rightCards = gsap.utils.toArray(".right-card")
-  let countCards = gsap.utils.toArray(".count-card")
-  tl.addLabel("start", 0.5)
-  tl.addLabel("menu", 0.5)
-  tl.addLabel("card", 1)
-  tl.addLabel("countCard", 3)
-  tl.to(".m-header", { y: 0, opacity: 1, duration: 1.5, ease: "power4.out" }, "start")
-  tl.to(".bottom-tray", { y: 0, opacity: 1, duration: 1.5, ease: "power4.out" }, "start")
+  let tl = gsap.timeline({ paused: false });
+  let leftCards = gsap.utils.toArray(".left-card");
+  let rightCards = gsap.utils.toArray(".right-card");
+  let countCards = gsap.utils.toArray(".count-card");
+  tl.addLabel("start", 0.5);
+  tl.addLabel("menu", 0.5);
+  tl.addLabel("card", 1);
+  tl.addLabel("countCard", 3);
+  tl.to(
+    ".m-header",
+    { y: 0, opacity: 1, duration: 1.5, ease: "power4.out" },
+    "start",
+  );
+  tl.to(
+    ".bottom-tray",
+    { y: 0, opacity: 1, duration: 1.5, ease: "power4.out" },
+    "start",
+  );
   tl.to(
     ".top-menu",
     {
@@ -265,11 +286,23 @@ function handleMapPlayComplete() {
       duration: 1.5,
       ease: "power4.out",
     },
-    "-=1"
-  )
-  tl.to(".bottom-radar", { y: 0, opacity: 1, duration: 1.5, ease: "power4.out" }, "-=2")
-  tl.to(leftCards, { x: 0, opacity: 1, stagger: 0.2, duration: 1.5, ease: "power4.out" }, "card")
-  tl.to(rightCards, { x: 0, opacity: 1, stagger: 0.2, duration: 1.5, ease: "power4.out" }, "card")
+    "-=1",
+  );
+  tl.to(
+    ".bottom-radar",
+    { y: 0, opacity: 1, duration: 1.5, ease: "power4.out" },
+    "-=2",
+  );
+  tl.to(
+    leftCards,
+    { x: 0, opacity: 1, stagger: 0.2, duration: 1.5, ease: "power4.out" },
+    "card",
+  );
+  tl.to(
+    rightCards,
+    { x: 0, opacity: 1, stagger: 0.2, duration: 1.5, ease: "power4.out" },
+    "card",
+  );
   tl.to(
     countCards,
     {
@@ -279,8 +312,8 @@ function handleMapPlayComplete() {
       duration: 1.5,
       ease: "power4.out",
     },
-    "card"
-  )
+    "card",
+  );
 }
 </script>
 

@@ -1,39 +1,39 @@
-import { Resource } from "@/mini3d"
-import { FileLoader } from "three"
+import { Resource } from "@/mini3d";
+import { FileLoader } from "three";
 
-import pathLine from "@/assets/texture/pathLine4.png"
-import pathLine3 from "@/assets/texture/pathLine2.png"
-import pathLine2 from "@/assets/texture/pathLine.png"
+import pathLine from "@/assets/texture/pathLine4.png";
+import pathLine3 from "@/assets/texture/pathLine2.png";
+import pathLine2 from "@/assets/texture/pathLine.png";
 
-import side from "@/assets/texture/side.png"
-import ocean from "@/assets/texture/ocean-bg.png"
-import rotationBorder1 from "@/assets/texture/rotationBorder1.png"
-import rotationBorder2 from "@/assets/texture/rotationBorder2.png"
-import chinaBlurLine from "@/assets/texture/chinaBlurLine.png"
-import guangquan1 from "@/assets/texture/guangquan01.png"
-import guangquan2 from "@/assets/texture/guangquan02.png"
-import huiguang from "@/assets/texture/huiguang.png"
-import arrow from "@/assets/texture/arrow.png"
-import point from "@/assets/texture/point1.png"
-import flyLineFocus from "@/assets/texture/guangquan01.png"
-import mapFlyline from "@/assets/texture/flyline6.png"
+import side from "@/assets/texture/side.png";
+import ocean from "@/assets/texture/ocean-bg.png";
+import rotationBorder1 from "@/assets/texture/rotationBorder1.png";
+import rotationBorder2 from "@/assets/texture/rotationBorder2.png";
+import chinaBlurLine from "@/assets/texture/chinaBlurLine.png";
+import guangquan1 from "@/assets/texture/guangquan01.png";
+import guangquan2 from "@/assets/texture/guangquan02.png";
+import huiguang from "@/assets/texture/huiguang.png";
+import arrow from "@/assets/texture/arrow.png";
+import point from "@/assets/texture/point1.png";
+import flyLineFocus from "@/assets/texture/guangquan01.png";
+import mapFlyline from "@/assets/texture/flyline6.png";
 // 焦点贴图
-import focusArrowsTexture from "@/assets/texture/focus/focus_arrows.png"
-import focusBarTexture from "@/assets/texture/focus/focus_bar.png"
-import focusBgTexture from "@/assets/texture/focus/focus_bg.png"
-import focusMidQuanTexture from "@/assets/texture/focus/focus_mid_quan.png"
-import focusMoveBgTexture from "@/assets/texture/focus/focus_move_bg.png"
+import focusArrowsTexture from "@/assets/texture/focus/focus_arrows.png";
+import focusBarTexture from "@/assets/texture/focus/focus_bar.png";
+import focusBgTexture from "@/assets/texture/focus/focus_bg.png";
+import focusMidQuanTexture from "@/assets/texture/focus/focus_mid_quan.png";
+import focusMoveBgTexture from "@/assets/texture/focus/focus_move_bg.png";
 export class Assets {
   constructor() {
-    this.init()
+    this.init();
   }
   init() {
-    this.instance = new Resource()
+    this.instance = new Resource();
     // 添加Fileloader
-    this.instance.addLoader(FileLoader, "FileLoader")
+    this.instance.addLoader(FileLoader, "FileLoader");
 
     // 资源加载
-    let base_url = import.meta.env.BASE_URL
+    let base_url = import.meta.env.BASE_URL;
     let assets = [
       { type: "Texture", name: "flyline", path: pathLine },
       { type: "Texture", name: "pathLine", path: pathLine },
@@ -49,12 +49,12 @@ export class Assets {
       {
         type: "File",
         name: "mapJson",
-        path: base_url + "assets/json/广东省.json",
+        path: base_url + "assets/json/江西省.geojson",
       },
       {
         type: "File",
         name: "mapStroke",
-        path: base_url + "assets/json/广东省-轮廓.json",
+        path: base_url + "assets/json/江西省-轮廓.geojson",
       },
 
       { type: "Texture", name: "huiguang", path: huiguang },
@@ -76,8 +76,8 @@ export class Assets {
       { type: "Texture", name: "focusBg", path: focusBgTexture },
       { type: "Texture", name: "focusMidQuan", path: focusMidQuanTexture },
       { type: "Texture", name: "focusMoveBg", path: focusMoveBgTexture },
-    ]
+    ];
     // 资源加载
-    this.instance.loadAll(assets)
+    this.instance.loadAll(assets);
   }
 }

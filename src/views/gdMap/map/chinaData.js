@@ -81,7 +81,7 @@ export default [
     name: "江西省",
     center: [115.892151, 28.676493],
     centroid: [115.732975, 27.636112],
-    blur: true,
+    hide: true,
   },
   {
     name: "山东省",
@@ -111,7 +111,7 @@ export default [
     name: "广东省",
     center: [113.280637, 23.125178],
     centroid: [113.429919, 23.334643],
-    hide: true,
+    blur: true,
   },
   {
     name: "广西壮族自治区",
